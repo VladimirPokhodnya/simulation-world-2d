@@ -1,4 +1,51 @@
+let intervalId; // Переменная для хранения идентификатора интервала
+
+document.getElementById('initializeButton').addEventListener('click', async () => {
+    const herbivoreCount = document.getElementById('herbivoreCount').value;
+    const predatorCount = document.getElementById('predatorCount').value;
+
+    try {
+        const response = await fetch(`api/creatures?herbivoreCount=${herbivoreCount}&predatorCount=${predatorCount}`, {
+            method: 'POST',
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ошибка! статус: ${response.status}`);
+        }
+
+        const message = await response.text();
+        console.log(message); // Успешное сообщение
+    } catch (error) {
+        console.error('Ошибка при инициализации объектов:', error);
+    }
+});
 document.getElementById('stepButton').addEventListener('click', async () => {
+    await performStep(); // Вызов функции для выполнения одного шага
+});
+
+document.getElementById('startButton').addEventListener('click', () => {
+    // Если интервал уже запущен, ничего не делаем
+    if (intervalId) {
+        console.warn("Симуляция уже запущена");
+        return;
+    }
+
+    // Запускаем интервал на 500 мс
+    intervalId = setInterval(async () => {
+        await performStep();
+    }, 500);
+});
+
+document.getElementById('stopButton').addEventListener('click', () => {
+    // Останавливаем интервал
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null; // Сбрасываем переменную идентификатора интервала
+        console.log("Симуляция остановлена");
+    }
+});
+
+async function performStep() {
     try {
         const response = await fetch('api/map');
         if (!response.ok) {
@@ -16,13 +63,13 @@ document.getElementById('stepButton').addEventListener('click', async () => {
     } catch (error) {
         console.error('Ошибка при загрузке данных:', error);
     }
-});
+}
 
+// Функция обновления сетки
 function updateGrid(data) {
     const cells = document.querySelectorAll('td');
     cells.forEach(cell => {
         cell.textContent = "";
-        console.log("Ячейки очищены!");
     });
 
     data.forEach(obj => {

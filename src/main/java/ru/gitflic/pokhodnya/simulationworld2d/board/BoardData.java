@@ -1,9 +1,7 @@
 package ru.gitflic.pokhodnya.simulationworld2d.board;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Entity;
 import org.springframework.stereotype.Component;
+import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,18 +42,6 @@ public class BoardData {
         }
 
         return symbolCoordinatesList;
-    }
-
-    public String getCoordinatesAsJson() {
-        List<SymbolWithCoordinates> symbolCoordinates = getSymbolCoordinates();
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        try {
-            return objectMapper.writeValueAsString(symbolCoordinates);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return "[]";
-        }
     }
 
     public List<Entity> getAllEntities() {

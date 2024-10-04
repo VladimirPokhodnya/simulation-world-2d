@@ -7,8 +7,6 @@ import java.util.Random;
 public interface Creature extends Entity{
     Random random = new Random();
 
-    void makeMove();
-
     default CoordinateDto randomMove(CoordinateDto currentCoordinates) {
         int[][] directions = {
                 {0, 1},
