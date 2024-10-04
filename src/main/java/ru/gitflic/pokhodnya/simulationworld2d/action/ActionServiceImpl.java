@@ -1,5 +1,9 @@
 package ru.gitflic.pokhodnya.simulationworld2d.action;
 
+import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import ru.gitflic.pokhodnya.simulationworld2d.board.BoardService;
 import ru.gitflic.pokhodnya.simulationworld2d.board.CoordinateDto;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.Carrot;
@@ -14,13 +18,11 @@ import ru.gitflic.pokhodnya.simulationworld2d.entity.Tree;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.Wolf;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Creature;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Entity;
+import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Herbivore;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.MapDimensions;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Obstacles;
-import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Resources;
-import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Herbivore;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Predator;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Resources;
 
 import java.util.List;
 import java.util.Random;
@@ -28,6 +30,8 @@ import java.util.Random;
 @AllArgsConstructor
 @Service
 public class ActionServiceImpl implements ActionService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ActionServiceImpl.class);
 
     private final BoardService boardService;
     private final Random random = new Random();
@@ -109,6 +113,10 @@ public class ActionServiceImpl implements ActionService {
 
         for (Creature creature : creatures) {
             CoordinateDto currentCoordinates = boardService.getEntityCoordinates(creature);
+            if (currentCoordinates == null) {
+                logger.warn("Creature {} has null coordinates, skipping movement.", creature);
+                continue;
+            }
             boardService.moveEntity(creature, creature.randomMove(currentCoordinates));
         }
     }

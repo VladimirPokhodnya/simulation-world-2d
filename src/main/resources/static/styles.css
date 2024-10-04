@@ -4,7 +4,7 @@ body {
 table {
     border-collapse: collapse;
     margin: auto;
-    width: 1280px;
+    width: 1440px;
 }
 td {
     width: 40px;
@@ -12,5 +12,5 @@ td {
     border: 1px solid black;
     text-align: center;
     font-size: 32px;
-    /*background-color: lightgreen;*/
+    background-color: lightgreen;
 }

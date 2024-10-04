@@ -5,7 +5,7 @@ document.getElementById('initializeButton').addEventListener('click', async () =
     const predatorCount = document.getElementById('predatorCount').value;
 
     try {
-        const response = await fetch(`api/creatures?herbivoreCount=${herbivoreCount}&predatorCount=${predatorCount}`, {
+        const response = await fetch(`api/initActions?herbivoreCount=${herbivoreCount}&predatorCount=${predatorCount}`, {
             method: 'POST',
         });
 
@@ -48,7 +48,7 @@ document.getElementById('stopButton').addEventListener('click', () => {
 
 async function performStep() {
     try {
-        const response = await fetch('api/map');
+        const response = await fetch('api/turnActions');
         if (!response.ok) {
             throw new Error(`HTTP ошибка! статус: ${response.status}`);
         }

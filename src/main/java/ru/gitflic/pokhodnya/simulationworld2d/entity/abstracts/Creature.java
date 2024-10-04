@@ -8,6 +8,9 @@ public interface Creature extends Entity{
     Random random = new Random();
 
     default CoordinateDto randomMove(CoordinateDto currentCoordinates) {
+        if (currentCoordinates == null) {
+            throw new IllegalArgumentException("currentCoordinates cannot be null");
+        }
         int[][] directions = {
                 {0, 1},
                 {1, 1},
