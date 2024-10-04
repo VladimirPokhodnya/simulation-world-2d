@@ -14,7 +14,6 @@
 
 - Java 17 и выше
 - Git (для клонирования репозитория)
-- Maven (для сборки проекта)
 - Архиватор (для распаковки архива с репозиторием)
 
 ## Как запустить
@@ -22,7 +21,7 @@
 1. Клонируйте репозиторий или распакуйте архив с проектом:
 
    ```bash
-   git clone https://github.com/VladimirPokhodnya/simulation-api.git
+   git clone https://github.com/VladimirPokhodnya/simulation-world-2d.git
    ```
 
    или
@@ -33,19 +32,19 @@
 2. Перейдите в директорию проекта:
 
    ```bash
-   cd simulation-api
+   cd simulation-world-2d
    ```
 
 3. Сборка JAR-файла с помощью Maven:
 
    ```bash
-   mvn clean package
+   ./mvnw clean package 
    ```
 
 4. Запустите симуляцию:
 
    ```bash
-   java -jar  target/simulation-0.0.1-SNAPSHOT.jar
+   java -jar  target/simulation-world-2d-0.0.1-SNAPSHOT.jar
    ```
 
 5. После запуска приложения вам будет предложено перейти по ссылке, чтобы открыть страницу в браузере. Следуйте инструкциям, которые появятся в браузере.
