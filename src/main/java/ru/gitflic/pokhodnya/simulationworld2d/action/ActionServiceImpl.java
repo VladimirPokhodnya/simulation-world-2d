@@ -1,8 +1,7 @@
 package ru.gitflic.pokhodnya.simulationworld2d.action;
 
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.gitflic.pokhodnya.simulationworld2d.board.BoardService;
 import ru.gitflic.pokhodnya.simulationworld2d.board.CoordinateDto;
@@ -27,11 +26,10 @@ import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Resources;
 import java.util.List;
 import java.util.Random;
 
+@Slf4j
 @AllArgsConstructor
 @Service
 public class ActionServiceImpl implements ActionService {
-
-    private static final Logger logger = LoggerFactory.getLogger(ActionServiceImpl.class);
 
     private final BoardService boardService;
     private final Random random = new Random();
@@ -114,7 +112,7 @@ public class ActionServiceImpl implements ActionService {
         for (Creature creature : creatures) {
             CoordinateDto currentCoordinates = boardService.getEntityCoordinates(creature);
             if (currentCoordinates == null) {
-                logger.warn("Creature {} has null coordinates, skipping movement.", creature);
+                log.warn("Creature {} has null coordinates, skipping movement.", creature);
                 continue;
             }
             boardService.moveEntity(creature, creature.randomMove(currentCoordinates));

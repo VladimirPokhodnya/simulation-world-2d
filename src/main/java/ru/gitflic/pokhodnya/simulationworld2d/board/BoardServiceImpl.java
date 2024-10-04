@@ -1,9 +1,8 @@
 package ru.gitflic.pokhodnya.simulationworld2d.board;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Entity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Entity;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Herbivore;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Obstacles;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Predator;
@@ -11,10 +10,9 @@ import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Resources;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class BoardServiceImpl implements BoardService {
-
-    private static final Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
 
     private final BoardData boardData;
 
@@ -45,19 +43,19 @@ public class BoardServiceImpl implements BoardService {
 
         if (entityAtNewCoordinates != null) {
             if (entityAtNewCoordinates instanceof Obstacles) {
-                logger.warn("Движение невозможно: препятствие на пути.");
+                log.warn("Движение невозможно: препятствие на пути.");
                 return;
             }
 
             if (entity instanceof Predator && entityAtNewCoordinates instanceof Herbivore) {
-                logger.info("Хищник съел травоядное.");
+                log.info("Хищник съел травоядное.");
                 boardData.remove(entityAtNewCoordinates);
                 boardData.put(entity, newCoordinates);
                 return;
             }
 
             if (entity instanceof Herbivore && entityAtNewCoordinates instanceof Resources) {
-                logger.info("Травоядное съело корм.");
+                log.info("Травоядное съело корм.");
                 removeEntity(entityAtNewCoordinates);
                 boardData.put(entity, newCoordinates);
                 return;
@@ -65,7 +63,7 @@ public class BoardServiceImpl implements BoardService {
 
             if ((entity instanceof Herbivore && entityAtNewCoordinates instanceof Herbivore) ||
                 (entity instanceof Predator && entityAtNewCoordinates instanceof Predator)) {
-                logger.warn("Движение невозможно: встреча с другой сущностью того же типа.");
+                log.warn("Движение невозможно: встреча с другой сущностью того же типа.");
                 return;
             }
         }
