@@ -12,5 +12,6 @@ public interface BoardService {
     boolean isCellOccupied(CoordinateDto coordinateDto);
     List<SymbolWithCoordinates> getSymbolCoordinates();
     List<Entity> getAllEntities();
+    void clearAllEntities();
 }
 

@@ -47,5 +47,9 @@ public class BoardServiceImpl implements BoardService {
     public List<Entity> getAllEntities() {
         return boardData.getAllEntities();
     }
+
+    public void clearAllEntities() {
+        boardData.clearAllEntities();
+    }
 }
 

@@ -38,24 +38,21 @@ public class ActionServiceImpl implements ActionService {
     private final List<Class<? extends Obstacles>> obstacles = List.of(Tree.class, Rock.class, Statue.class);
 
     public void randomlyPlaceCreatures(int herbivoreCount, int predatorCount) {
-        // Получаем размеры карты из интерфейса MapDimensions
         int boardWidth = MapDimensions.MAP_COLUMNS;
         int boardHeight = MapDimensions.MAP_ROWS;
 
-        // Генерируем травоядных
+        boardService.clearAllEntities();
         for (int i = 0; i < herbivoreCount; i++) {
             Class<? extends Herbivore> herbivoreClass = getRandomClass(herbivores);
             placeRandomEntity(createInstance(herbivoreClass), boardWidth, boardHeight);
         }
 
-        // Генерируем хищников
         for (int i = 0; i < predatorCount; i++) {
             Class<? extends Predator> predatorClass = getRandomClass(predators);
             placeRandomEntity(createInstance(predatorClass), boardWidth, boardHeight);
         }
 
-        // Расстановка ресурсов и препятствий
-        placeRandomResourcesAndObstacles(boardWidth, boardHeight);
+        placeRandomResourcesAndObstacles(boardWidth, boardHeight, herbivoreCount, predatorCount);
     }
 
     private <T> Class<? extends T> getRandomClass(List<Class<? extends T>> classes) {
@@ -76,22 +73,29 @@ public class ActionServiceImpl implements ActionService {
             int x = random.nextInt(width);
             int y = random.nextInt(height);
             coordinate = new CoordinateDto(x, y);
-        } while (boardService.isCellOccupied(coordinate)); // Проверка на занятость координат
+        } while (boardService.isCellOccupied(coordinate));
 
         boardService.addEntity(entity, coordinate);
     }
 
-    private void placeRandomResourcesAndObstacles(int width, int height) {
-        for (int i = 0; i < 10; i++) { // Пример: 10 ресурсов
+    private void placeRandomResourcesAndObstacles(int width, int height, int herbivoreCount, int predatorCount) {
+        int totalCells = width * height;
+        int occupiedCells = herbivoreCount + predatorCount;
+        int unoccupiedCells = totalCells - occupiedCells;
+
+        int resourcesCount = unoccupiedCells / 10;
+        int obstaclesCount = unoccupiedCells / 10;
+
+        for (int i = 0; i < resourcesCount; i++) {
             Class<? extends Resources> resourceClass = getRandomClass(resources);
             createAndPlace(resourceClass, width, height);
         }
-        for (int i = 0; i < 5; i++) { // Пример: 5 препятствий
+
+        for (int i = 0; i < obstaclesCount; i++) {
             Class<? extends Obstacles> obstacleClass = getRandomClass(obstacles);
             createAndPlace(obstacleClass, width, height);
         }
     }
-
     private <T> void createAndPlace(Class<? extends T> clazz, int width, int height) {
         T entity = createInstance(clazz);
         placeRandomEntity((Entity) entity, width, height);

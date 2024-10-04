@@ -18,6 +18,7 @@ document.getElementById('initializeButton').addEventListener('click', async () =
     } catch (error) {
         console.error('Ошибка при инициализации объектов:', error);
     }
+    await performStep();
 });
 document.getElementById('stepButton').addEventListener('click', async () => {
     await performStep(); // Вызов функции для выполнения одного шага

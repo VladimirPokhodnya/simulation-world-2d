@@ -48,6 +48,10 @@ public class BoardData {
         return new ArrayList<>(coordinateMap.keySet());
     }
 
+    public void clearAllEntities() {
+        coordinateMap.clear();
+    }
+
 }
 
 
