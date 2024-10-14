@@ -2,7 +2,7 @@ package ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts;
 
 import ru.gitflic.pokhodnya.simulationworld2d.entity.Emoji;
 
-public interface Entity extends MapDimensions{
+public interface Entity {
 
     default String getSymbol() {
         String className = this.getClass().getSimpleName().toUpperCase();

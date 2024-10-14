@@ -18,10 +18,11 @@ import ru.gitflic.pokhodnya.simulationworld2d.entity.Wolf;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Creature;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Entity;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Herbivore;
-import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.MapDimensions;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Obstacles;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Predator;
 import ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts.Resources;
+import static ru.gitflic.pokhodnya.simulationworld2d.constant.MapDimensions.MAP_COLUMNS;
+import static ru.gitflic.pokhodnya.simulationworld2d.constant.MapDimensions.MAP_ROWS;
 
 import java.util.List;
 import java.util.Random;
@@ -40,21 +41,19 @@ public class ActionServiceImpl implements ActionService {
     private final List<Class<? extends Obstacles>> obstacles = List.of(Tree.class, Rock.class, Statue.class);
 
     public void randomlyPlaceCreatures(int herbivoreCount, int predatorCount) {
-        int boardWidth = MapDimensions.MAP_COLUMNS;
-        int boardHeight = MapDimensions.MAP_ROWS;
 
         boardService.clearAllEntities();
         for (int i = 0; i < herbivoreCount; i++) {
             Class<? extends Herbivore> herbivoreClass = getRandomClass(herbivores);
-            placeRandomEntity(createInstance(herbivoreClass), boardWidth, boardHeight);
+            placeRandomEntity(createInstance(herbivoreClass));
         }
 
         for (int i = 0; i < predatorCount; i++) {
             Class<? extends Predator> predatorClass = getRandomClass(predators);
-            placeRandomEntity(createInstance(predatorClass), boardWidth, boardHeight);
+            placeRandomEntity(createInstance(predatorClass));
         }
 
-        placeRandomResourcesAndObstacles(boardWidth, boardHeight, herbivoreCount, predatorCount);
+        placeRandomResourcesAndObstacles(herbivoreCount, predatorCount);
     }
 
     private <T> Class<? extends T> getRandomClass(List<Class<? extends T>> classes) {
@@ -69,19 +68,19 @@ public class ActionServiceImpl implements ActionService {
         }
     }
 
-    private <T extends Entity> void placeRandomEntity(T entity, int width, int height) {
+    private <T extends Entity> void placeRandomEntity(T entity) {
         CoordinateDto coordinate;
         do {
-            int x = random.nextInt(width);
-            int y = random.nextInt(height);
+            int x = random.nextInt(MAP_COLUMNS);
+            int y = random.nextInt(MAP_ROWS);
             coordinate = new CoordinateDto(x, y);
         } while (boardService.isCellOccupied(coordinate));
 
         boardService.addEntity(entity, coordinate);
     }
 
-    private void placeRandomResourcesAndObstacles(int width, int height, int herbivoreCount, int predatorCount) {
-        int totalCells = width * height;
+    private void placeRandomResourcesAndObstacles(int herbivoreCount, int predatorCount) {
+        int totalCells = MAP_COLUMNS * MAP_ROWS;
         int occupiedCells = herbivoreCount + predatorCount;
         int unoccupiedCells = totalCells - occupiedCells;
 
@@ -90,17 +89,17 @@ public class ActionServiceImpl implements ActionService {
 
         for (int i = 0; i < resourcesCount; i++) {
             Class<? extends Resources> resourceClass = getRandomClass(resources);
-            createAndPlace(resourceClass, width, height);
+            createAndPlace(resourceClass);
         }
 
         for (int i = 0; i < obstaclesCount; i++) {
             Class<? extends Obstacles> obstacleClass = getRandomClass(obstacles);
-            createAndPlace(obstacleClass, width, height);
+            createAndPlace(obstacleClass);
         }
     }
-    private <T> void createAndPlace(Class<? extends T> clazz, int width, int height) {
+    private <T> void createAndPlace(Class<? extends T> clazz) {
         T entity = createInstance(clazz);
-        placeRandomEntity((Entity) entity, width, height);
+        placeRandomEntity((Entity) entity);
     }
     public void moveAllCreatures() {
 

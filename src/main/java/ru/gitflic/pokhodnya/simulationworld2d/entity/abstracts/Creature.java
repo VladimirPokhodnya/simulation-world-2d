@@ -4,6 +4,9 @@ import ru.gitflic.pokhodnya.simulationworld2d.board.CoordinateDto;
 
 import java.util.Random;
 
+import static ru.gitflic.pokhodnya.simulationworld2d.constant.MapDimensions.MAP_COLUMNS;
+import static ru.gitflic.pokhodnya.simulationworld2d.constant.MapDimensions.MAP_ROWS;
+
 public interface Creature extends Entity{
     Random random = new Random();
 
