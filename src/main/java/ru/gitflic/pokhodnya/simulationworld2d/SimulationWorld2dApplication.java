@@ -1,13 +1,9 @@
 package ru.gitflic.pokhodnya.simulationworld2d;
 
-import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import ru.gitflic.pokhodnya.simulationworld2d.action.ActionService;
-import ru.gitflic.pokhodnya.simulationworld2d.board.BoardService;
-import ru.gitflic.pokhodnya.simulationworld2d.board.CoordinateDto;
-import ru.gitflic.pokhodnya.simulationworld2d.entity.*;
+import ru.gitflic.pokhodnya.simulationworld2d.entity.util.Emoji;
 
 @SpringBootApplication
 public class SimulationWorld2dApplication implements CommandLineRunner {

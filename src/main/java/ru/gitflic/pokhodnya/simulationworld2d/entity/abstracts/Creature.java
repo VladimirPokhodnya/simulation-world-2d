@@ -1,42 +1,7 @@
 package ru.gitflic.pokhodnya.simulationworld2d.entity.abstracts;
 
-import ru.gitflic.pokhodnya.simulationworld2d.board.CoordinateDto;
+import ru.gitflic.pokhodnya.simulationworld2d.entity.util.RandomMovable;
 
-import java.util.Random;
-
-import static ru.gitflic.pokhodnya.simulationworld2d.constant.MapDimensions.MAP_COLUMNS;
-import static ru.gitflic.pokhodnya.simulationworld2d.constant.MapDimensions.MAP_ROWS;
-
-public interface Creature extends Entity{
-    Random random = new Random();
-
-    default CoordinateDto randomMove(CoordinateDto currentCoordinates) {
-        if (currentCoordinates == null) {
-            throw new IllegalArgumentException("currentCoordinates cannot be null");
-        }
-        int[][] directions = {
-                {0, 1},
-                {1, 1},
-                {1, 0},
-                {1, -1},
-                {0, -1},
-                {-1, -1},
-                {-1, 0},
-                {-1, 1}
-        };
-
-        int[] direction = directions[random.nextInt(directions.length)];
-
-        int currentX = currentCoordinates.x();
-        int currentY = currentCoordinates.y();
-
-        int newX = (currentX + direction[0]) % MAP_COLUMNS;
-        int newY = (currentY + direction[1]) % MAP_ROWS;
-
-        if (newX < 0) newX += MAP_COLUMNS;
-        if (newY < 0) newY += MAP_ROWS;
-
-        return new CoordinateDto(newX, newY);
-    }
+public interface Creature extends Entity, RandomMovable {
 
 }

@@ -1,4 +1,4 @@
-package ru.gitflic.pokhodnya.simulationworld2d.entity;
+package ru.gitflic.pokhodnya.simulationworld2d.entity.util;
 
 public enum Emoji {
     ROCK("🪨"),
