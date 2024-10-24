@@ -40,6 +40,7 @@ public class ActionServiceImpl implements ActionService {
     private final List<Class<? extends Resources>> resources = List.of(Grass.class, Carrot.class, Lettuce.class);
     private final List<Class<? extends Obstacles>> obstacles = List.of(Tree.class, Rock.class, Statue.class);
 
+    @Override
     public void randomlyPlaceCreatures(int herbivoreCount, int predatorCount) {
 
         boardService.clearAllEntities();
@@ -101,6 +102,8 @@ public class ActionServiceImpl implements ActionService {
         T entity = createInstance(clazz);
         placeRandomEntity((Entity) entity);
     }
+
+    @Override
     public void moveAllCreatures() {
 
         List<Creature> creatures = boardService.getAllEntities().stream()

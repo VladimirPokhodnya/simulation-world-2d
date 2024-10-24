@@ -30,10 +30,12 @@ public class BoardServiceImpl implements BoardService {
         }
     }
 
+    @Override
     public CoordinateDto getEntityCoordinates(Entity entity) {
         return boardData.get(entity);
     }
 
+    @Override
     public void moveEntity(Entity entity, CoordinateDto newCoordinates) {
         if (!boardData.contains(entity)) {
             return;
@@ -43,14 +45,20 @@ public class BoardServiceImpl implements BoardService {
 
         if (entityAtNewCoordinates != null) {
             if (entityAtNewCoordinates instanceof Obstacles) {
-                log.warn("Движение невозможно: препятствие на пути.");
+                log.warn("Движение невозможно: препятствие на пути. Координаты: " + newCoordinates.x() + " " + newCoordinates.y());
                 return;
             }
 
             if (entity instanceof Predator && entityAtNewCoordinates instanceof Herbivore) {
-                log.info("Хищник съел травоядное.");
+                log.info("Хищник встретил травоядное и съел его");
                 boardData.remove(entityAtNewCoordinates);
                 boardData.put(entity, newCoordinates);
+                return;
+            }
+
+            if (entity instanceof Herbivore && entityAtNewCoordinates instanceof Predator) {
+                log.info("Травоядное встретило хищника и было съедено");
+                boardData.remove(entity);
                 return;
             }
 
@@ -83,14 +91,17 @@ public class BoardServiceImpl implements BoardService {
         return boardData.isCellOccupied(coordinateDto);
     }
 
+    @Override
     public List<SymbolWithCoordinates> getSymbolCoordinates() {
         return boardData.getSymbolCoordinates();
     }
 
+    @Override
     public List<Entity> getAllEntities() {
         return boardData.getAllEntities();
     }
 
+    @Override
     public void clearAllEntities() {
         boardData.clearAllEntities();
     }

@@ -28,7 +28,9 @@
       <select id="herbivoreCount">
         <script>
           for (let i = 1; i <= 10; i++) {
-            document.write(`<option value="${i}">${i}</option>`);
+            const selected = (i === 9) ? 'selected' : '';
+            document.write(`<option value="${i}" ${selected}>${i}</option>`);
+            // document.write(`<option value="${i}">${i}</option>`);
           }
         </script>
       </select>
@@ -38,7 +40,9 @@
       <select id="predatorCount">
         <script>
           for (let i = 1; i <= 10; i++) {
-            document.write(`<option value="${i}">${i}</option>`);
+            const selected = (i === 3) ? 'selected' : '';
+            document.write(`<option value="${i}" ${selected}>${i}</option>`);
+            // document.write(`<option value="${i}">${i}</option>`);
           }
         </script>
       </select>
