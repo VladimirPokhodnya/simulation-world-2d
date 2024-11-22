@@ -2,6 +2,7 @@ package ru.gitflic.pokhodnya.simulationworld2d.action;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import ru.gitflic.pokhodnya.simulationworld2d.board.SymbolWithCoordinates;
 
 import java.util.List;
 
+@CrossOrigin
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api")
