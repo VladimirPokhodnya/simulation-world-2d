@@ -16,3 +16,5 @@ docker stop simulation-world-2d
 # remove
 docker rm simulation-world-2d
 ```
+
+docker-compose up --build
